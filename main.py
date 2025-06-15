@@ -1,3 +1,5 @@
+import time
+from utils.instagram_checker import check_instagram
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import Message
 from aiogram.utils import executor
@@ -11,8 +13,16 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(content_types=types.ContentType.PHOTO)
 async def handle_photo(msg: Message):
-    caption = generate_caption()  # заглушка
+    caption = generate_caption()
     await msg.answer(f"✨ Предложение поста:\n\n{caption}")
+
+async def periodic_check():
+    while True:
+        try:
+            check_instagram()
+        except Exception as exc:
+            print(f"Error during check: {exc}")
+        time.sleep(300)
 
 if __name__ == "__main__":
     print("🚀 Bot is running...")
