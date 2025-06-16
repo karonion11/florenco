@@ -15,7 +15,7 @@ dp = Dispatcher(bot)
 async def handle_photo(msg: Message):
     caption = generate_caption()
     await msg.answer(f"✨ Предложение поста:\n\n{caption}")
-
+### ah
 async def periodic_check():
     while True:
         try:
