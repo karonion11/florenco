@@ -1,5 +1,5 @@
-import time
-from utils.instagram_checker import check_instagram
+import asyncio
+from instagram_checker import check_unread_messages
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import Message
 from aiogram.utils import executor
@@ -15,15 +15,19 @@ dp = Dispatcher(bot)
 async def handle_photo(msg: Message):
     caption = generate_caption()
     await msg.answer(f"✨ Предложение поста:\n\n{caption}")
-### ah
-async def periodic_check():
+
+
+async def periodic_check() -> None:
+    """Periodically check Instagram for unread messages."""
     while True:
         try:
-            check_instagram()
+            check_unread_messages()
         except Exception as exc:
             print(f"Error during check: {exc}")
-        time.sleep(300)
+        await asyncio.sleep(300)
 
 if __name__ == "__main__":
+    loop = asyncio.get_event_loop()
+    loop.create_task(periodic_check())
     print("🚀 Bot is running...")
-    executor.start_polling(dp)
+    executor.start_polling(dp, loop=loop)
