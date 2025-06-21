@@ -1,7 +1,8 @@
 from datetime import datetime, time
 from zoneinfo import ZoneInfo
 
-TIMEZONE = ZoneInfo("Europe/Kyiv")
+
+TIMEZONE = ZoneInfo("Europe/Kiev")
 WORK_START = time(9, 0)
 WORK_END = time(19, 0)
 
